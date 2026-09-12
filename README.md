@@ -4,11 +4,11 @@
 
 ## Basic Details
 
-### Team Name: [Your Team Name]
+### Team Name: DeepThink
 
 ### Team Members
-- Team Lead: Fathimathul Nafiya V V - [College Name]
-- Member 2: Fathimath Ruzaina Nazrin - [College Name]
+- Team Lead: Fathimathul Nafiya V V - [College of engineering trikaripur]
+- Member 2: Fathimath Ruzaina Nazrin - [College of engineering trikaripur]
 
 ### Project Description
 
