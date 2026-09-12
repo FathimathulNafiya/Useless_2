@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DA ROAST BOT | Final-Year B.Tech AI Project</title>
+  <meta name="description" content="DA Roast Bot - Futuristic conversational AI college friend that answers questions with useful information and comedic roasts." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body data-theme="funny">
+  <!-- Realistic College Student Room Background & Atmospheric Lighting -->
+  <div class="room-background" aria-hidden="true"></div>
+  <div class="room-ambient-overlay" aria-hidden="true"></div>
+  <div class="sunset-window-glow" aria-hidden="true"></div>
+
+  <!-- Warm fairy lights string across the window frame -->
+  <div class="fairy-lights-container" aria-hidden="true">
+    <span class="fairy-bulb b-1"></span>
+    <span class="fairy-bulb b-2"></span>
+    <span class="fairy-bulb b-3"></span>
+    <span class="fairy-bulb b-4"></span>
+    <span class="fairy-bulb b-5"></span>
+    <span class="fairy-bulb b-6"></span>
+    <span class="fairy-bulb b-7"></span>
+    <span class="fairy-bulb b-8"></span>
+  </div>
+
+  <!-- Ambient floating meme & dust canvas -->
+  <canvas id="neuralCanvas" class="neural-canvas" aria-hidden="true"></canvas>
+
+  <!-- Interactive Debugging Rubber Duck (Funny Easter Egg) -->
+  <button class="interactive-duck" id="interactiveDuck" title="Click for Emergency Debugging Wisdom 🦆" aria-label="Rubber duck debugger">
+    <span class="duck-graphic">🦆</span>
+    <span class="duck-speech-bubble">Quack!</span>
+  </button>
+
+  <!-- Relatable B.Tech student life sticky notes on perimeter margins -->
+  <aside class="desk-notes-container" aria-hidden="true">
+    <div class="sticky-note note-left-top">
+      <div class="pin"></div>
+      <div class="note-text">Attendance: 74.8% 💀</div>
+      <div class="note-sub">PRAYING FOR MEDICAL</div>
+    </div>
+    <div class="sticky-note note-left-bottom">
+      <div class="tape"></div>
+      <div class="note-text">"Works on localhost:5000" 🚢</div>
+      <div class="note-sub">SHIP MY LAPTOP</div>
+    </div>
+    <div class="sticky-note note-right-top">
+      <div class="pin"></div>
+      <div class="note-text">Viva: "Explain line 4" 🫠</div>
+      <div class="note-sub">*SWEATING INTENSIFIES*</div>
+    </div>
+    <div class="sticky-note note-right-bottom">
+      <div class="tape"></div>
+      <div class="note-text">Step 1: Write 'Given' 📝<br>Step 2: Pray for step marks</div>
+      <div class="note-sub">ENGINEERING 101</div>
+    </div>
+  </aside>
+
+  <!-- Master App Container -->
+  <div class="app-container">
+    <!-- Header (Section 4) -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="brand-logo">
+          <div class="logo-icon-wrap">
+            <span class="logo-icon">🔥</span>
+          </div>
+          <div class="brand-text">
+            <h1 class="brand-title">DA ROAST BOT</h1>
+            <span class="brand-tag">v2.0 • B.Tech Edition</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <div class="status-indicator" id="statusIndicator" title="AI Backend Status">
+          <span class="status-dot"></span>
+          <span class="status-text" id="statusText">AI ONLINE</span>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Prominent Roast Me Button -->
+        <button class="header-action-btn roast-quick-btn" id="headerRoastBtn" title="Instant College Roast">
+          <span class="btn-icon">🔥</span>
+          <span class="btn-text">ROAST ME</span>
+        </button>
+
+        <!-- Personality Switcher -->
+        <button class="header-action-btn icon-btn" id="openPersonalityBtn" title="Change Personality (College Friend, Professor...)">
+          <span class="btn-icon">🎭</span>
+          <span class="btn-label-responsive">Persona</span>
+        </button>
+
+        <!-- Roast History -->
+        <button class="header-action-btn icon-btn" id="openHistoryBtn" title="Roast History">
+          <span class="btn-icon">📜</span>
+          <span class="btn-label-responsive">History</span>
+        </button>
+
+        <!-- Achievements -->
+        <button class="header-action-btn icon-btn" id="openAchievementsBtn" title="Achievements">
+          <span class="btn-icon">🏆</span>
+          <span class="btn-label-responsive">Badges</span>
+        </button>
+
+        <!-- Clear Chat -->
+        <button class="header-action-btn icon-only-btn" id="clearChatBtn" title="Clear Conversation (Ctrl+K)" aria-label="Clear chat">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18"></path>
+            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+          </svg>
+        </button>
+
+        <!-- Settings Button -->
+        <button class="header-action-btn icon-only-btn" id="openSettingsBtn" title="Settings & About" aria-label="Open settings">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Chat Viewport & Messages Scroll Area (Section 6) -->
+    <main class="chat-viewport" id="chatViewport">
+      <!-- Welcome Empty State (Section 5) -->
+      <section class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-badge">
+          <span>✨</span> Final-Year B.Tech AI Project
+        </div>
+        <div class="welcome-hero-icon">🔥</div>
+        <h2 class="welcome-title">DA ROAST BOT</h2>
+        <p class="welcome-tagline">"Ask anything. Regret everything."</p>
+        <p class="welcome-desc">Your witty, slightly disrespectful college friend. Real technical answers blended with comedic reality checks.</p>
+
+        <!-- Suggested Prompts (Section 5) -->
+        <div class="suggested-prompts-wrap">
+          <span class="prompts-label">Suggested questions:</span>
+          <div class="prompts-grid">
+            <button class="prompt-chip" data-prompt="what is the difference between ego and arrogance">
+              😌 Ego vs Arrogance
+            </button>
+            <button class="prompt-chip" data-prompt="explain cnn">
+              🧠 Explain CNN
+            </button>
+            <button class="prompt-chip" data-prompt="i'm tired">
+              😴 I'm tired
+            </button>
+            <button class="prompt-chip" data-prompt="Roast my project">
+              🔥 Roast my project
+            </button>
+            <button class="prompt-chip" data-prompt="Why am I always late?">
+              ⏰ Why am I always late?
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Messages Stream -->
+      <div class="messages-container" id="messagesContainer"></div>
+
+      <!-- Thinking / Typing Indicator (Section 7) -->
+      <div class="typing-indicator-row hidden" id="typingIndicator">
+        <div class="msg-avatar bot-avatar pulsing">
+          <span>🤖</span>
+        </div>
+        <div class="typing-bubble">
+          <div class="typing-header">
+            <span class="typing-name">🤖 DA BOT <span class="typing-subtext">Thinking</span></span>
+          </div>
+          <div class="typing-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Controls & Input Area -->
+    <footer class="app-input-area">
+      <!-- Roast Level Selector (Section 8) -->
+      <div class="roast-level-container">
+        <div class="roast-level-header">
+          <span class="roast-level-title">ROAST LEVEL:</span>
+          <span class="roast-level-desc" id="modeDescription">Your average college-friend disrespect.</span>
+        </div>
+        <div class="roast-level-selector" id="roastLevelSelector" role="radiogroup" aria-label="Roast Level">
+          <button class="level-btn" data-mode="friendly" role="radio" aria-checked="false" title="Light teasing. No emotional damage.">
+            <span class="level-emoji">😇</span>
+            <span class="level-name">FRIENDLY</span>
+          </button>
+          <button class="level-btn active" data-mode="normal" role="radio" aria-checked="true" title="Your average college-friend disrespect.">
+            <span class="level-emoji">😏</span>
+            <span class="level-name">NORMAL</span>
+          </button>
+          <button class="level-btn" data-mode="savage" role="radio" aria-checked="false" title="Enter at your own risk.">
+            <span class="level-emoji">💀</span>
+            <span class="level-name">SAVAGE</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chat Input Form -->
+      <form class="chat-form" id="chatForm">
+        <!-- Voice Input Microphone (Section 11) -->
+        <button type="button" class="form-btn mic-btn" id="micBtn" title="Voice Input (Speech-to-Text)" aria-label="Voice input">
+          <svg class="mic-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+            <line x1="8" y1="23" x2="16" y2="23"></line>
+          </svg>
+          <span class="mic-pulse-ring"></span>
+        </button>
+
+        <!-- Message Input Field -->
+        <div class="input-field-wrapper">
+          <textarea
+            id="userInput"
+            class="user-input-field"
+            placeholder="Ask anything or paste code... (Enter to send, Shift+Enter for newline)"
+            rows="1"
+            maxlength="2000"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Message input"
+          ></textarea>
+        </div>
+
+        <!-- Send Button -->
+        <button type="submit" class="form-btn send-btn" id="sendBtn" title="Send message (Enter)" disabled aria-label="Send message">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+
+      <!-- Statistics Bar (Section 15 & 23) -->
+      <div class="stats-bar">
+        <div class="stat-item" title="Total conversation sessions">
+          <span class="stat-icon">💬</span>
+          <span class="stat-val" id="statConvos">0</span>
+          <span class="stat-lbl">Chats</span>
+        </div>
+        <div class="stat-divider">•</div>
+        <div class="stat-item" title="Total roasts delivered">
+          <span class="stat-icon">🔥</span>
+          <span class="stat-val" id="statRoasts">0</span>
+          <span class="stat-lbl">Roasts</span>
+        </div>
+        <div class="stat-divider">•</div>
+        <div class="stat-item" title="Savage mode burns survived">
+          <span class="stat-icon">💀</span>
+          <span class="stat-val" id="statSavage">0</span>
+          <span class="stat-lbl">Savage</span>
+        </div>
+        <div class="stat-divider">•</div>
+        <div class="stat-item" title="Questions asked by user">
+          <span class="stat-icon">📝</span>
+          <span class="stat-val" id="statQuestions">0</span>
+          <span class="stat-lbl">Questions</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- =========================================================================
+       MODALS & DIALOGS
+       ========================================================================= -->
+
+  <!-- Modal 1: ROAST ME Showcase Modal (Sections 9 & 10) -->
+  <div class="modal-backdrop hidden" id="roastShowcaseModal">
+    <div class="modal-card modal-roast-spotlight">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-icon">🔥</span>
+          <h3>ROAST GENERATED</h3>
+        </div>
+        <button class="modal-close-btn" id="closeRoastModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Roast Quote Box -->
+        <div class="roast-quote-card">
+          <div class="quote-mark">“</div>
+          <p class="roast-quote-text" id="showcaseRoastText">Summoning high-voltage emotional damage...</p>
+          <div class="roast-meta-row">
+            <span class="roast-mode-pill" id="showcaseModePill">NORMAL MODE</span>
+            <span class="roast-timestamp" id="showcaseTime">Just now</span>
+          </div>
+        </div>
+
+        <!-- Roast Intensity Meter (Section 10) -->
+        <div class="intensity-meter-card">
+          <div class="intensity-header">
+            <span class="intensity-label">ROAST INTENSITY</span>
+            <span class="intensity-tier-badge" id="intensityTierBadge">🔥 Spicy</span>
+            <span class="intensity-number" id="intensityNumber">74 / 100</span>
+          </div>
+          <div class="intensity-track">
+            <div class="intensity-bar" id="intensityBar" style="width: 74%;"></div>
+          </div>
+          <div class="intensity-scale-labels">
+            <span>0 Harmless</span>
+            <span>50 Mild</span>
+            <span>75 Spicy</span>
+            <span>90 Dangerous</span>
+            <span>100 Nuclear</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer modal-footer-actions">
+        <button class="modal-btn secondary" id="copyShowcaseBtn">
+          📋 Copy
+        </button>
+        <button class="modal-btn secondary" id="listenShowcaseBtn">
+          🔊 Listen
+        </button>
+        <button class="modal-btn primary" id="roastAgainBtn">
+          🔥 Roast Again
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Character / Personality Selector (Section 13) -->
+  <div class="modal-backdrop hidden" id="personalityModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-icon">🎭</span>
+          <h3>AI Persona Selector</h3>
+        </div>
+        <button class="modal-close-btn" id="closePersonalityModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-text">Pick who is answering your questions. Each persona adapts its comedic style and academic perspective while preserving factual accuracy.</p>
+        <div class="persona-grid" id="personaGrid">
+          <button class="persona-card active" data-persona="college-friend">
+            <span class="persona-emoji">🤝</span>
+            <div class="persona-info">
+              <strong class="persona-name">College Friend (Default)</strong>
+              <p class="persona-desc">Sarcastic, relatable engineering buddy sharing the deadline struggle.</p>
+            </div>
+          </button>
+          <button class="persona-card" data-persona="strict-professor">
+            <span class="persona-emoji">👨‍🏫</span>
+            <div class="persona-info">
+              <strong class="persona-name">Strict Professor</strong>
+              <p class="persona-desc">Demands IEEE citations, grills your methodology, and questions your attendance.</p>
+            </div>
+          </button>
+          <button class="persona-card" data-persona="best-friend">
+            <span class="persona-emoji">😎</span>
+            <div class="persona-info">
+              <strong class="persona-name">Best Friend</strong>
+              <p class="persona-desc">Playful, cheeky banter. Teases your life choices but always gives the answer.</p>
+            </div>
+          </button>
+          <button class="persona-card" data-persona="deadpan-ai">
+            <span class="persona-emoji">🤖</span>
+            <div class="persona-info">
+              <strong class="persona-name">Deadpan AI</strong>
+              <p class="persona-desc">Monotone silicon calculations. Computes the statistical likelihood of your failure.</p>
+            </div>
+          </button>
+          <button class="persona-card" data-persona="savage-friend">
+            <span class="persona-emoji">🔥</span>
+            <div class="persona-info">
+              <strong class="persona-name">Savage Friend</strong>
+              <p class="persona-desc">Zero filter roast comic. High comedic damage with sharp reality checks.</p>
+            </div>
+          </button>
+          <button class="persona-card" data-persona="motivational-villain">
+            <span class="persona-emoji">🧠</span>
+            <div class="persona-info">
+              <strong class="persona-name">Motivational Villain</strong>
+              <p class="persona-desc">Evil genius mocking your pathetic mortal procrastination into excellence.</p>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn primary" id="donePersonalityBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Roast History Panel (Section 14) -->
+  <div class="modal-backdrop hidden" id="historyModal">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-icon">📜</span>
+          <h3>🔥 Roast History</h3>
+        </div>
+        <button class="modal-close-btn" id="closeHistoryModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-text">Recent burns summoned from the roast furnace (stored in your browser session):</p>
+        <div class="history-list" id="historyList">
+          <div class="history-empty">No roasts recorded yet. Click "ROAST ME" to generate your first burn!</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn danger" id="clearHistoryBtn">Clear History</button>
+        <button class="modal-btn primary" id="doneHistoryBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Achievements (Section 16) -->
+  <div class="modal-backdrop hidden" id="achievementsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-icon">🏆</span>
+          <h3>Achievements & Badges</h3>
+        </div>
+        <button class="modal-close-btn" id="closeAchievementsModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-text">Track your survival milestones through academic banter:</p>
+        <div class="achievements-list" id="achievementsList"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn primary" id="doneAchievementsBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Settings Panel (Section 17) -->
+  <div class="modal-backdrop hidden" id="settingsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-icon">⚙️</span>
+          <h3>Settings & Preferences</h3>
+        </div>
+        <button class="modal-close-btn" id="closeSettingsBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4>Visual Theme</h4>
+          <div class="setting-row">
+            <div>
+              <div class="setting-title">Theme Mode</div>
+              <div class="setting-desc">Switch between Chaotic B.Tech, Sunset Warm, Light, and Dark</div>
+            </div>
+            <select id="themeSelect" class="cyber-select">
+              <option value="funny">🤡 Chaotic B.Tech (Meme Dorm)</option>
+              <option value="warm">🌅 Sunset Cozy (Study Room)</option>
+              <option value="dark">🌙 Twilight Dark (Midnight Cramming)</option>
+              <option value="light">📄 Clean Minimal (Assignment PDF)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4>Audio & Interaction</h4>
+          <div class="setting-row">
+            <div>
+              <div class="setting-title">Synthesized Sound FX</div>
+              <div class="setting-desc">Futuristic Web Audio tones on send and receive</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="soundToggle" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-title">Voice Output (TTS)</div>
+              <div class="setting-desc">Automatically read bot responses aloud</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="ttsToggle">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-title">Auto-Scroll</div>
+              <div class="setting-desc">Keep viewport locked to the latest message</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="autoscrollToggle" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4>Backend Diagnostics</h4>
+          <div class="server-diag-box">
+            <div class="diag-item"><span>Status:</span> <strong id="diagStatus">Checking...</strong></div>
+            <div class="diag-item"><span>AI Engine:</span> <strong id="diagAiEngine">OpenAI / Smart Fallback</strong></div>
+            <div class="diag-item"><span>Database:</span> <strong id="diagDb">In-Memory Store</strong></div>
+            <div class="diag-item"><span>Session ID:</span> <code id="diagSessionId">-</code></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn danger" id="resetStatsBtn">Reset Stats</button>
+        <button class="modal-btn secondary" id="modalClearConvoBtn">Clear Memory</button>
+        <button class="modal-btn primary" id="modalSettingsDoneBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Application Logic -->
+  <script src="js/app.js"></script>
+</body>
+</html>

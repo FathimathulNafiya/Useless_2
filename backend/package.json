@@ -1,0 +1,27 @@
+{
+  "name": "da-roast-bot-backend",
+  "version": "1.0.0",
+  "description": "Backend server for DA Roast Bot - Sarcastic AI College Friend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "ai",
+    "roast",
+    "chatbot",
+    "openai",
+    "express",
+    "btech-project"
+  ],
+  "author": "DA Roast Bot Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "openai": "^4.86.1",
+    "express-rate-limit": "^7.5.0"
+  }
+}

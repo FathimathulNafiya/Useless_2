@@ -1,0 +1,27 @@
+{
+  "name": "da-roast-bot",
+  "version": "2.0.0",
+  "description": "DA Roast Bot v2.0 - Final-Year B.Tech AI Project & Conversational Assistant",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "install-all": "cd backend && npm install",
+    "test": "node test_suite.js",
+    "docker:build": "docker build -t da-roast-bot .",
+    "docker:run": "docker compose up --build"
+  },
+  "keywords": [
+    "ai",
+    "roast",
+    "chatbot",
+    "btech",
+    "express",
+    "fullstack",
+    "sse-streaming",
+    "speech-api",
+    "docker",
+    "openapi"
+  ],
+  "author": "DA Roast Bot Engineering Team",
+  "license": "MIT"
+}
